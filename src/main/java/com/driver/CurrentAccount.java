@@ -64,11 +64,17 @@ public class CurrentAccount extends BankAccount{
 
         StringBuilder res = new StringBuilder();
 
-        char[] resStrArr = new char[str.length()];
+        //char[] resStrArr = new char[str.length()];
         res.append(" ".repeat(N));
         int ind = 0;
 
         // filling the most frequently occurring char in the even indices
+        while (maxCount-- > 0) {
+            res = new StringBuilder(res.substring(0, ind) + ch_max + res.substring(ind + 1));
+            ind += 2;
+        }
+        count[ch_max - 'A'] = 0;
+
 //        while(count[ch_max-'A']>0) {
 //            resStrArr[ind] = ch_max;
 //            ind = ind+2;
@@ -76,14 +82,16 @@ public class CurrentAccount extends BankAccount{
 //            count[ch_max-'A']--;
 //        }
 
-        while (maxCount-- > 0) {
-            res = new StringBuilder(res.substring(0, ind) + ch_max + res.substring(ind + 1));
-            ind += 2;
-        }
-        count[ch_max - 'A'] = 0;
 
 
         // now filling the other Chars; first filling the even positions and then the odd positions
+        for (int i = 0; i < 26; ++i) {
+            while (count[i]-- > 0) {
+                ind = (ind >= N) ? 1 : ind;
+                res = new StringBuilder(res.substring(0, ind) + (char) ('A' + i) + res.substring(ind + 1));
+                ind += 2;
+            }
+        }
 
 //        for (int i=0;i<26;i++) {
 //            int frequency = count[i];
@@ -95,13 +103,6 @@ public class CurrentAccount extends BankAccount{
 //                ind += 2;
 //            }
 //        }
-        for (int i = 0; i < 26; ++i) {
-            while (count[i]-- > 0) {
-                ind = (ind >= N) ? 1 : ind;
-                res = new StringBuilder(res.substring(0, ind) + (char) ('A' + i) + res.substring(ind + 1));
-                ind += 2;
-            }
-        }
 
 //        for(char ch :resStrArr) {
 //            res.append(ch);
