@@ -69,7 +69,9 @@ public class BankAccount {
 
     public void deposit(double amount) {
         //add amount to balance
-        this.balance += amount;
+        if(amount>0) {
+            this.balance += amount;
+        }
 
     }
 
