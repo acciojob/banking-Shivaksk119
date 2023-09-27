@@ -62,51 +62,51 @@ public class CurrentAccount extends BankAccount{
             return "";
         }
 
+        StringBuilder res = new StringBuilder();
+
         char[] resStrArr = new char[str.length()];
-//      res.append(" ".repeat(N));
+        res.append(" ".repeat(N));
         int ind = 0;
 
         // filling the most frequently occurring char in the even indices
-        while(count[ch_max-'A']>0) {
-            resStrArr[ind] = ch_max;
-            ind = ind+2;
+//        while(count[ch_max-'A']>0) {
+//            resStrArr[ind] = ch_max;
+//            ind = ind+2;
+//
+//            count[ch_max-'A']--;
+//        }
 
-            count[ch_max-'A']--;
+        while (maxCount-- > 0) {
+            res = new StringBuilder(res.substring(0, ind) + ch_max + res.substring(ind + 1));
+            ind += 2;
         }
+        count[ch_max - 'A'] = 0;
+
 
         // now filling the other Chars; first filling the even positions and then the odd positions
-        for (int i=0;i<26;i++) {
-            int frequency = count[i];
-            while(frequency-->0) {
-                if(ind==resStrArr.length) {
-                    ind = 1;
-                }
-                resStrArr[ind] = (char)(i+'A');
+
+//        for (int i=0;i<26;i++) {
+//            int frequency = count[i];
+//            while(frequency-->0) {
+//                if(ind==resStrArr.length) {
+//                    ind = 1;
+//                }
+//                resStrArr[ind] = (char)(i+'A');
+//                ind += 2;
+//            }
+//        }
+        for (int i = 0; i < 26; ++i) {
+            while (count[i]-- > 0) {
+                ind = (ind >= N) ? 1 : ind;
+                res = new StringBuilder(res.substring(0, ind) + (char) ('A' + i) + res.substring(ind + 1));
                 ind += 2;
             }
         }
 
-        StringBuilder res = new StringBuilder();
-
-        for(char ch :resStrArr) {
-            res.append(ch);
-        }
+//        for(char ch :resStrArr) {
+//            res.append(ch);
+//        }
         return res.toString();
-
-//      while (maxCount-- > 0) {
-//            res = new StringBuilder(res.substring(0, ind) + ch_max + res.substring(ind + 1));
-//            ind += 2;
-//        }
-//        count[ch_max - 'A'] = 0;
-
-        // now filling the other Chars; first filling the even positions and then the odd positions
-//        for (int i = 0; i < 26; ++i) {
-//            while (count[i]-- > 0) {
-//                ind = (ind >= N) ? 1 : ind;
-//                res = new StringBuilder(res.substring(0, ind) + (char) ('A' + i) + res.substring(ind + 1));
-//                ind += 2;
-//            }
-//        }
 
     }
 
