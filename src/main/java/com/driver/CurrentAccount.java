@@ -49,39 +49,57 @@ public class CurrentAccount extends BankAccount{
             return "";
 
         int[] count = new int[26];
-        for (int i = 0; i < 26; ++i)
-            count[i] = 0;
-        for (char ch : str.toCharArray())
+
+        for (char ch : str.toCharArray()) {
             count[ch - 'A']++;
+        }
 
         char ch_max = getMaxCountChar(count);
         int maxCount = count[ch_max - 'A'];
 
         // check if the result is possible or not
-        if (maxCount > (N + 1) / 2)
+        if (maxCount > (N + 1) / 2) {
             return "";
+        }
 
-        StringBuilder res = new StringBuilder();
-        res.append(" ".repeat(N));
+        char[] resStrArr = new char[str.length()];
+//      res.append(" ".repeat(N));
 
         int ind = 0;
         // filling the most frequently occurring char in the even indices
-        while (maxCount-- > 0) {
-            res = new StringBuilder(res.substring(0, ind) + ch_max + res.substring(ind + 1));
-            ind += 2;
-        }
-        count[ch_max - 'A'] = 0;
-
-        // now filling the other Chars; first filling the even positions and then the odd positions
-        for (int i = 0; i < 26; ++i) {
-            while (count[i]-- > 0) {
-                ind = (ind >= N) ? 1 : ind;
-                res = new StringBuilder(res.substring(0, ind) + (char) ('A' + i) + res.substring(ind + 1));
+        for(int i=0;i<26;i++) {
+            int frequency = count[i];
+            while(frequency-->0) {
+                if(ind==resStrArr.length) {
+                    ind = 1;
+                }
+                resStrArr[ind] = (char)(i+'A');
                 ind += 2;
             }
         }
 
+        StringBuilder res = new StringBuilder();
+
+        for(char ch :resStrArr) {
+            res.append(ch);
+        }
         return res.toString();
+
+//      while (maxCount-- > 0) {
+//            res = new StringBuilder(res.substring(0, ind) + ch_max + res.substring(ind + 1));
+//            ind += 2;
+//        }
+//        count[ch_max - 'A'] = 0;
+
+        // now filling the other Chars; first filling the even positions and then the odd positions
+//        for (int i = 0; i < 26; ++i) {
+//            while (count[i]-- > 0) {
+//                ind = (ind >= N) ? 1 : ind;
+//                res = new StringBuilder(res.substring(0, ind) + (char) ('A' + i) + res.substring(ind + 1));
+//                ind += 2;
+//            }
+//        }
+
     }
 
     static char getMaxCountChar(int[] count) {

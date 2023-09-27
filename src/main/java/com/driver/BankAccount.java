@@ -38,33 +38,54 @@ public class BankAccount {
 
     }
 
-    public String generateAccountNumber(int digits, int sum) throws Exception{
+    public String generateAccountNumber(int digits, int sum) throws Exception {
         //Each digit of an account number can lie between 0 and 9 (both inclusive)
         //Generate account number having given number of 'digits' such that the sum of digits is equal to 'sum'
         //If it is not possible, throw "Account Number can not be generated" exception
         StringBuilder accountNo = new StringBuilder();
-        int j = (int) Math.ceil((double) sum / digits);
-
-        if (j <= 9) {
-            int i = j;
-            while (digits > 0 && sum >= 0) {
-                if (i > 9) {
-                    i = j;
-                }
-                if (sum < i) {
-                    i = sum;
-                }
-                accountNo.append(i);
-                sum -= i;
-
-                ++i;
-                --digits;
-            }
-            return accountNo.toString();
-        }
-        else {
+        if (sum > 9 * digits) {
             throw new Exception("Account Number can not be generated");
         }
+
+        int quotient = sum / 9;
+        int remainder = sum % 9;
+
+        while (quotient-- > 0) {
+            accountNo.append("9");
+        }
+        if (remainder > 0) {
+            accountNo.append(remainder);
+        }
+
+        int remainingDigits = digits - accountNo.length();
+        while (remainingDigits-- > 0) {
+            accountNo.append('0');
+        }
+        return accountNo.toString();
+
+        //another approach
+//        int j = (int) Math.ceil((double) sum / digits);
+//
+//        if (j <= 9) {
+//            int i = j;
+//            while (digits > 0 && sum >= 0) {
+//                if (i > 9) {
+//                    i = j;
+//                }
+//                if (sum < i) {
+//                    i = sum;
+//                }
+//                accountNo.append(i);
+//                sum -= i;
+//
+//                ++i;
+//                --digits;
+//            }
+//            return accountNo.toString();
+//        }
+//        else {
+//            throw new Exception("Account Number can not be generated");
+//        }
     }
 
     public void deposit(double amount) {
