@@ -64,10 +64,18 @@ public class CurrentAccount extends BankAccount{
 
         char[] resStrArr = new char[str.length()];
 //      res.append(" ".repeat(N));
-
         int ind = 0;
+
         // filling the most frequently occurring char in the even indices
-        for(int i=0;i<26;i++) {
+        while(count[ch_max-'A']>0) {
+            resStrArr[ind] = ch_max;
+            ind = ind+2;
+
+            count[ch_max-'A']--;
+        }
+
+        // now filling the other Chars; first filling the even positions and then the odd positions
+        for (int i=0;i<26;i++) {
             int frequency = count[i];
             while(frequency-->0) {
                 if(ind==resStrArr.length) {
